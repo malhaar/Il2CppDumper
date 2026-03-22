@@ -250,6 +250,278 @@ namespace Il2CppDumper
             }
         }
 
+        public MethodIndex ReadMethodIndex()
+        {
+            if (Version < 105)
+            {
+                int value = ReadInt32();
+                return new MethodIndex(value);
+            }
+            else
+            {
+                switch (Metadata.methodIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new MethodIndex(-1);
+                            return new MethodIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new MethodIndex(-1);
+                            return new MethodIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new MethodIndex(-1);
+                            return new MethodIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public FieldIndex ReadFieldIndex()
+        {
+            if (Version < 106)
+            {
+                int value = ReadInt32();
+                return new FieldIndex(value);
+            }
+            else
+            {
+                switch (Metadata.fieldIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new FieldIndex(-1);
+                            return new FieldIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new FieldIndex(-1);
+                            return new FieldIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new FieldIndex(-1);
+                            return new FieldIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public EventIndex ReadEventIndex()
+        {
+            if (Version < 104)
+            {
+                int value = ReadInt32();
+                return new EventIndex(value);
+            }
+            else
+            {
+                switch (Metadata.eventIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new EventIndex(-1);
+                            return new EventIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new EventIndex(-1);
+                            return new EventIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new EventIndex(-1);
+                            return new EventIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public PropertyIndex ReadPropertyIndex()
+        {
+            if (Version < 104)
+            {
+                int value = ReadInt32();
+                return new PropertyIndex(value);
+            }
+            else
+            {
+                switch (Metadata.propertyIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new PropertyIndex(-1);
+                            return new PropertyIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new PropertyIndex(-1);
+                            return new PropertyIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new PropertyIndex(-1);
+                            return new PropertyIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public NestedTypeIndex ReadNestedTypeIndex()
+        {
+            if (Version < 104)
+            {
+                int value = ReadInt32();
+                return new NestedTypeIndex(value);
+            }
+            else
+            {
+                switch (Metadata.nestedTypeIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new NestedTypeIndex(-1);
+                            return new NestedTypeIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new NestedTypeIndex(-1);
+                            return new NestedTypeIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new NestedTypeIndex(-1);
+                            return new NestedTypeIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public InterfacesIndex ReadInterfacesIndex()
+        {
+            if (Version < 104)
+            {
+                int value = ReadInt32();
+                return new InterfacesIndex(value);
+            }
+            else
+            {
+                switch (Metadata.interfacesIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new InterfacesIndex(-1);
+                            return new InterfacesIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new InterfacesIndex(-1);
+                            return new InterfacesIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new InterfacesIndex(-1);
+                            return new InterfacesIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public GenericParameterIndex ReadGenericParameterIndex()
+        {
+            if (Version < 106)
+            {
+                int value = ReadInt32();
+                return new GenericParameterIndex(value);
+            }
+            else
+            {
+                switch (Metadata.genericParameterIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new GenericParameterIndex(-1);
+                            return new GenericParameterIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new GenericParameterIndex(-1);
+                            return new GenericParameterIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new GenericParameterIndex(-1);
+                            return new GenericParameterIndex((int)value);
+                        }
+                }
+            }
+        }
+
+        public DefaultValueDataIndex ReadDefaultValueDataIndex()
+        {
+            if (Version < 106)
+            {
+                int value = ReadInt32();
+                return new DefaultValueDataIndex(value);
+            }
+            else
+            {
+                switch (Metadata.defaultValueDataIndexSize)
+                {
+                    case 1:
+                        {
+                            uint value = ReadByte();
+                            if (value == Byte.MaxValue) return new DefaultValueDataIndex(-1);
+                            return new DefaultValueDataIndex((int)value);
+                        }
+                    case 2:
+                        {
+                            uint value = ReadUInt16();
+                            if (value == UInt16.MaxValue) return new DefaultValueDataIndex(-1);
+                            return new DefaultValueDataIndex((int)value);
+                        }
+                    case 4:
+                    default:
+                        {
+                            uint value = ReadUInt32();
+                            if (value == UInt32.MaxValue) return new DefaultValueDataIndex(-1);
+                            return new DefaultValueDataIndex((int)value);
+                        }
+                }
+            }
+        }
+
         public T ReadClass<T>() where T : new()
         {
             var type = typeof(T);
@@ -321,6 +593,38 @@ namespace Il2CppDumper
                     else if (fieldType == typeof(ParameterIndex))
                     {
                         i.SetValue(t, ReadParameterIndex());
+                    }
+                    else if (fieldType == typeof(MethodIndex))
+                    {
+                        i.SetValue(t, ReadMethodIndex());
+                    }
+                    else if (fieldType == typeof(FieldIndex))
+                    {
+                        i.SetValue(t, ReadFieldIndex());
+                    }
+                    else if (fieldType == typeof(EventIndex))
+                    {
+                        i.SetValue(t, ReadEventIndex());
+                    }
+                    else if (fieldType == typeof(PropertyIndex))
+                    {
+                        i.SetValue(t, ReadPropertyIndex());
+                    }
+                    else if (fieldType == typeof(NestedTypeIndex))
+                    {
+                        i.SetValue(t, ReadNestedTypeIndex());
+                    }
+                    else if (fieldType == typeof(InterfacesIndex))
+                    {
+                        i.SetValue(t, ReadInterfacesIndex());
+                    }
+                    else if (fieldType == typeof(GenericParameterIndex))
+                    {
+                        i.SetValue(t, ReadGenericParameterIndex());
+                    }
+                    else if (fieldType == typeof(DefaultValueDataIndex))
+                    {
+                        i.SetValue(t, ReadDefaultValueDataIndex());
                     }
                     else if (fieldType == typeof(Il2CppSectionMetadata))
                     {

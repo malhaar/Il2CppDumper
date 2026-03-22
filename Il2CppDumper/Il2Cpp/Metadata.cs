@@ -17,7 +17,7 @@ namespace Il2CppDumper
         public Il2CppMethodDefinition[] methodDefs;
         public Il2CppParameterDefinition[] parameterDefs;
         public Il2CppFieldDefinition[] fieldDefs;
-        private readonly Dictionary<int, Il2CppFieldDefaultValue> fieldDefaultValuesDic;
+        private readonly Dictionary<FieldIndex, Il2CppFieldDefaultValue> fieldDefaultValuesDic;
         private readonly Dictionary<ParameterIndex, Il2CppParameterDefaultValue> parameterDefaultValuesDic;
         public Il2CppPropertyDefinition[] propertyDefs;
         public Il2CppCustomAttributeTypeRange[] attributeTypeRanges;
@@ -47,6 +47,17 @@ namespace Il2CppDumper
         public static int typeDefinitionIndexSize;
         public static int genericContainerIndexSize;
         public static int parameterIndexSize;
+        // v104+
+        public static int interfacesIndexSize;
+        public static int eventIndexSize;
+        public static int propertyIndexSize;
+        public static int nestedTypeIndexSize;
+        // v105+
+        public static int methodIndexSize;
+        // v106+
+        public static int genericParameterIndexSize;
+        public static int fieldIndexSize;
+        public static int defaultValueDataIndexSize;
 
         public Metadata(Stream stream) : base(stream)
         {
@@ -60,7 +71,7 @@ namespace Il2CppDumper
             {
                 throw new InvalidDataException("ERROR: Metadata file supplied is not valid metadata file.");
             }
-            if (version < 16 || version > 39)
+            if (version < 16 || version > 106)
             {
                 throw new NotSupportedException($"ERROR: Metadata file supplied is not a supported version[{version}].");
             }
@@ -112,6 +123,46 @@ namespace Il2CppDumper
                 typeDefinitionIndexSize = 4;
                 genericContainerIndexSize = 4;
                 parameterIndexSize = 4;
+            }
+
+            // v104+ index sizes
+            if (Version >= 104)
+            {
+                interfacesIndexSize = GetIndexSize((int)header.interfaceOffsets.count);
+                eventIndexSize = GetIndexSize((int)header.events.count);
+                propertyIndexSize = GetIndexSize((int)header.properties.count);
+                nestedTypeIndexSize = GetIndexSize((int)header.nestedTypes.count);
+            }
+            else
+            {
+                interfacesIndexSize = 4;
+                eventIndexSize = 4;
+                propertyIndexSize = 4;
+                nestedTypeIndexSize = 4;
+            }
+
+            // v105+ index sizes
+            if (Version >= 105)
+            {
+                methodIndexSize = GetIndexSize((int)header.methods.count);
+            }
+            else
+            {
+                methodIndexSize = 4;
+            }
+
+            // v106+ index sizes
+            if (Version >= 106)
+            {
+                genericParameterIndexSize = GetIndexSize((int)header.genericParameters.count);
+                fieldIndexSize = GetIndexSize((int)header.fields.count);
+                defaultValueDataIndexSize = GetIndexSize((int)header.fieldAndParameterDefaultValueData.count);
+            }
+            else
+            {
+                genericParameterIndexSize = 4;
+                fieldIndexSize = 4;
+                defaultValueDataIndexSize = 4;
             }
 
             imageDefs = Version < 38
@@ -249,7 +300,7 @@ namespace Il2CppDumper
 
         public bool GetFieldDefaultValueFromIndex(int index, out Il2CppFieldDefaultValue value)
         {
-            return fieldDefaultValuesDic.TryGetValue(index, out value);
+            return fieldDefaultValuesDic.TryGetValue(new FieldIndex(index), out value);
         }
 
         public bool GetParameterDefaultValueFromIndex(int index, out Il2CppParameterDefaultValue value)
@@ -392,6 +443,38 @@ namespace Il2CppDumper
                 {
                     size += parameterIndexSize;
                 }
+                else if (fieldType == typeof(MethodIndex))
+                {
+                    size += methodIndexSize;
+                }
+                else if (fieldType == typeof(FieldIndex))
+                {
+                    size += fieldIndexSize;
+                }
+                else if (fieldType == typeof(EventIndex))
+                {
+                    size += eventIndexSize;
+                }
+                else if (fieldType == typeof(PropertyIndex))
+                {
+                    size += propertyIndexSize;
+                }
+                else if (fieldType == typeof(NestedTypeIndex))
+                {
+                    size += nestedTypeIndexSize;
+                }
+                else if (fieldType == typeof(InterfacesIndex))
+                {
+                    size += interfacesIndexSize;
+                }
+                else if (fieldType == typeof(GenericParameterIndex))
+                {
+                    size += genericParameterIndexSize;
+                }
+                else if (fieldType == typeof(DefaultValueDataIndex))
+                {
+                    size += defaultValueDataIndexSize;
+                }
                 else
                 {
                     size += SizeOf(fieldType);
@@ -406,6 +489,7 @@ namespace Il2CppDumper
             {
                 "Int32" or "UInt32" => 4,
                 "Int16" or "UInt16" => 2,
+                "Byte" or "SByte" => 1,
                 _ => 0,
             };
         }

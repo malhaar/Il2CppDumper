@@ -114,8 +114,8 @@ namespace Il2CppDumper
                         if (config.DumpField && typeDef.field_count > 0)
                         {
                             writer.Write("\n\t// Fields\n");
-                            var fieldEnd = typeDef.fieldStart + typeDef.field_count;
-                            for (var i = typeDef.fieldStart; i < fieldEnd; ++i)
+                            var fieldEnd = (int)typeDef.fieldStart + typeDef.field_count;
+                            for (var i = (int)typeDef.fieldStart; i < fieldEnd; ++i)
                             {
                                 var fieldDef = metadata.fieldDefs[i];
                                 var fieldType = il2Cpp.types[fieldDef.typeIndex];
@@ -202,8 +202,8 @@ namespace Il2CppDumper
                         if (config.DumpProperty && typeDef.property_count > 0)
                         {
                             writer.Write("\n\t// Properties\n");
-                            var propertyEnd = typeDef.propertyStart + typeDef.property_count;
-                            for (var i = typeDef.propertyStart; i < propertyEnd; ++i)
+                            var propertyEnd = (int)typeDef.propertyStart + typeDef.property_count;
+                            for (var i = (int)typeDef.propertyStart; i < propertyEnd; ++i)
                             {
                                 var propertyDef = metadata.propertyDefs[i];
                                 if (config.DumpAttribute)
@@ -238,8 +238,8 @@ namespace Il2CppDumper
                         if (config.DumpMethod && typeDef.method_count > 0)
                         {
                             writer.Write("\n\t// Methods\n");
-                            var methodEnd = typeDef.methodStart + typeDef.method_count;
-                            for (var i = typeDef.methodStart; i < methodEnd; ++i)
+                            var methodEnd = (int)typeDef.methodStart + typeDef.method_count;
+                            for (var i = (int)typeDef.methodStart; i < methodEnd; ++i)
                             {
                                 writer.Write("\n");
                                 var methodDef = metadata.methodDefs[i];

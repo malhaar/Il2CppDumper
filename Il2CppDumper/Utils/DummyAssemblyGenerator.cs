@@ -132,9 +132,9 @@ namespace Il2CppDumper
                     if (typeDef.genericContainerIndex >= 0)
                     {
                         var genericContainer = metadata.genericContainers[typeDef.genericContainerIndex];
-                        for (int i = 0; i < genericContainer.type_argc; i++)
+                        for (int i = 0; i < genericContainer.GetTypeArgc(metadata.Version); i++)
                         {
-                            var genericParameterIndex = genericContainer.genericParameterStart + i;
+                            var genericParameterIndex = genericContainer.GetGenericParameterStart(metadata.Version) + i;
                             var param = metadata.genericParameters[genericParameterIndex];
                             var genericParameter = CreateGenericParameter(param, typeDefinition);
                             typeDefinition.GenericParameters.Add(genericParameter);
@@ -169,8 +169,8 @@ namespace Il2CppDumper
                     var typeDefinition = typeDefinitionDic[typeDef];
 
                     //field
-                    var fieldEnd = typeDef.fieldStart + typeDef.field_count;
-                    for (var i = typeDef.fieldStart; i < fieldEnd; ++i)
+                    var fieldEnd = (int)typeDef.fieldStart + typeDef.field_count;
+                    for (var i = (int)typeDef.fieldStart; i < fieldEnd; ++i)
                     {
                         var fieldDef = metadata.fieldDefs[i];
                         var fieldType = il2Cpp.types[fieldDef.typeIndex];
@@ -216,8 +216,8 @@ namespace Il2CppDumper
                         }
                     }
                     //method
-                    var methodEnd = typeDef.methodStart + typeDef.method_count;
-                    for (var i = typeDef.methodStart; i < methodEnd; ++i)
+                    var methodEnd = (int)typeDef.methodStart + typeDef.method_count;
+                    for (var i = (int)typeDef.methodStart; i < methodEnd; ++i)
                     {
                         var methodDef = metadata.methodDefs[i];
                         var methodName = metadata.GetStringFromIndex(methodDef.nameIndex);
@@ -230,9 +230,9 @@ namespace Il2CppDumper
                         if (methodDef.genericContainerIndex >= 0)
                         {
                             var genericContainer = metadata.genericContainers[methodDef.genericContainerIndex];
-                            for (int j = 0; j < genericContainer.type_argc; j++)
+                            for (int j = 0; j < genericContainer.GetTypeArgc(metadata.Version); j++)
                             {
-                                var genericParameterIndex = genericContainer.genericParameterStart + j;
+                                var genericParameterIndex = genericContainer.GetGenericParameterStart(metadata.Version) + j;
                                 var param = metadata.genericParameters[genericParameterIndex];
                                 var genericParameter = CreateGenericParameter(param, methodDefinition);
                                 methodDefinition.GenericParameters.Add(genericParameter);
@@ -322,8 +322,8 @@ namespace Il2CppDumper
                         }
                     }
                     //property
-                    var propertyEnd = typeDef.propertyStart + typeDef.property_count;
-                    for (var i = typeDef.propertyStart; i < propertyEnd; ++i)
+                    var propertyEnd = (int)typeDef.propertyStart + typeDef.property_count;
+                    for (var i = (int)typeDef.propertyStart; i < propertyEnd; ++i)
                     {
                         var propertyDef = metadata.propertyDefs[i];
                         var propertyName = metadata.GetStringFromIndex(propertyDef.nameIndex);
@@ -356,8 +356,8 @@ namespace Il2CppDumper
                         }
                     }
                     //event
-                    var eventEnd = typeDef.eventStart + typeDef.event_count;
-                    for (var i = typeDef.eventStart; i < eventEnd; ++i)
+                    var eventEnd = (int)typeDef.eventStart + typeDef.event_count;
+                    for (var i = (int)typeDef.eventStart; i < eventEnd; ++i)
                     {
                         var eventDef = metadata.eventDefs[i];
                         var eventName = metadata.GetStringFromIndex(eventDef.nameIndex);

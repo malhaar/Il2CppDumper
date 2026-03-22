@@ -193,9 +193,9 @@ namespace Il2CppDumper
         public string GetGenericContainerParams(Il2CppGenericContainer genericContainer)
         {
             var genericParameterNames = new List<string>();
-            for (int i = 0; i < genericContainer.type_argc; i++)
+            for (int i = 0; i < genericContainer.GetTypeArgc(metadata.Version); i++)
             {
-                var genericParameterIndex = genericContainer.genericParameterStart + i;
+                var genericParameterIndex = genericContainer.GetGenericParameterStart(metadata.Version) + i;
                 var genericParameter = metadata.genericParameters[genericParameterIndex];
                 genericParameterNames.Add(metadata.GetStringFromIndex(genericParameter.nameIndex));
             }

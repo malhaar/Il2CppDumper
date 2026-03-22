@@ -81,8 +81,8 @@ namespace Il2CppDumper
                     var typeDef = metadata.typeDefs[typeIndex];
                     AddStruct(typeDef);
                     var typeName = executor.GetTypeDefName(typeDef, true, true);
-                    var methodEnd = typeDef.methodStart + typeDef.method_count;
-                    for (var i = typeDef.methodStart; i < methodEnd; ++i)
+                    var methodEnd = (int)typeDef.methodStart + typeDef.method_count;
+                    for (var i = (int)typeDef.methodStart; i < methodEnd; ++i)
                     {
                         var methodDef = metadata.methodDefs[i];
                         var methodName = metadata.GetStringFromIndex(methodDef.nameIndex);
@@ -741,9 +741,9 @@ namespace Il2CppDumper
         {
             if (typeDef.field_count > 0)
             {
-                var fieldEnd = typeDef.fieldStart + typeDef.field_count;
+                var fieldEnd = (int)typeDef.fieldStart + typeDef.field_count;
                 var cache = new HashSet<string>(StringComparer.Ordinal);
-                for (var i = typeDef.fieldStart; i < fieldEnd; ++i)
+                for (var i = (int)typeDef.fieldStart; i < fieldEnd; ++i)
                 {
                     var fieldDef = metadata.fieldDefs[i];
                     var fieldType = il2Cpp.types[fieldDef.typeIndex];
